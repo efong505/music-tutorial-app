@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "projects": {
+    "music-tutorial-frontend": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/music-tutorial-frontend",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.json"
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "music-tutorial-frontend:build"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "music-tutorial-frontend"
+}
