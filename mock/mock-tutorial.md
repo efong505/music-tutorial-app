@@ -9,13 +9,13 @@ You’ll start locally with a **mock backend** so you can run the app immediatel
 
 ```mermaid
 graph TD
-  A[User Browser (Angular App)] --> B[CloudFront CDN]
-  B --> C[S3 Website Hosting]
-  A --> D[API Gateway]
-  D --> E[Lambda Functions]
-  E --> F[DynamoDB Tables]
-  E --> G[S3 Content Bucket]
-  E --> H[Stripe Payments]
+  A["User Browser (Angular App)"] --> B["CloudFront CDN"]
+  B --> C["S3 Website Hosting"]
+  A --> D["API Gateway"]
+  D --> E["Lambda Functions"]
+  E --> F["DynamoDB Tables"]
+  E --> G["S3 Content Bucket"]
+  E --> H["Stripe Payments"]
   G --> B
 ```
 
