@@ -15,20 +15,9 @@ S3 Content → CloudFront (video delivery)
 
 ---
 
-# Phase 1 — AWS Infrastructure Setup
+## Phase 1: AWS Infrastructure Setup
 
-> If you are starting in **mock mode**, you can skip to **Phase 3** for now and come back when ready to connect AWS.
-
-### 1.1 Install AWS CLI
-```
-music-tutorial-app/
-├── frontend/          # Angular application
-├── backend/           # Lambda functions
-├── infrastructure/    # AWS CDK or CloudFormation
-└── shared/           # Shared types/interfaces
-```
-
-### 1.2 Create DynamoDB Tables
+### 1.1 Create AWS Account and Configure CLI
 ```bash
 # Install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -39,7 +28,9 @@ sudo ./aws/install
 aws configure
 ```
 
-### 1.3 Create S3 Buckets
+### 1.2 Set Up Core Services
+
+#### DynamoDB Tables
 ```javascript
 // infrastructure/tables.js
 const tables = {
@@ -73,7 +64,7 @@ const tables = {
 };
 ```
 
-### 1.4 Create Cognito User Pool
+#### S3 Buckets Configuration
 ```yaml
 # infrastructure/s3-config.yaml
 Buckets:
@@ -90,6 +81,44 @@ Buckets:
     WebsiteConfiguration:
       IndexDocument: index.html
       ErrorDocument: error.html
+```
+
+### 1.3 Cognito User Pool Setup
+```javascript
+// infrastructure/cognito-config.js
+const userPoolConfig = {
+  PoolName: 'music-tutorial-users',
+  Policies: {
+    PasswordPolicy: {
+      MinimumLength: 8,
+      RequireUppercase: true,
+      RequireLowercase: true,
+      RequireNumbers: true,
+      RequireSymbols: true
+    }
+  },
+  Schema: [
+    {
+      Name: 'email',
+      AttributeDataType: 'String',
+      Required: true,
+      Mutable: false
+    },
+    {
+      Name: 'name',
+      AttributeDataType: 'String',
+      Required: true,
+      Mutable: true
+    },
+    {
+      Name: 'custom:role',
+      AttributeDataType: 'String',
+      Mutable: true
+    }
+  ],
+  AutoVerifiedAttributes: ['email'],
+  MfaConfiguration: 'OPTIONAL'
+};
 ```
 
 ---
